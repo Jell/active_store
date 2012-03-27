@@ -1,5 +1,3 @@
-require 'active_support/core_ext/hash/indifferent_access'
-
 module ActiveStore
   class Base
 
@@ -9,19 +7,19 @@ module ActiveStore
     end
 
     def ==(another_object)
-      (self.class.attributes - [:created_at]).all? do |attribute|
+      (self.class.attributes - ["created_at"]).all? do |attribute|
         self.send(attribute) == another_object.send(attribute)
       end
     end
 
     def attributes
-      self.class.attributes.inject(HashWithIndifferentAccess.new) do |accu, attribute|
+      self.class.attributes.inject({}) do |accu, attribute|
         send(attribute).nil? ? accu : accu.merge({attribute => send(attribute)})
       end
     end
 
     def set_attributes(params = {})
-      params = params.with_indifferent_access
+      params = Hash[ params.map {|key, value| [key.to_s, value]} ]
       self.class.attributes.each do |attribute|
         write_attribute(attribute, params[attribute])
       end
@@ -74,8 +72,8 @@ module ActiveStore
 
       def define_attributes(*args)
         @attributes ||= []
-        @attributes += args
-        @attributes |= [:id, :created_at]
+        @attributes += args.map(&:to_s)
+        @attributes |= ["id", "created_at"]
         attr_accessor *@attributes
       end
 
@@ -128,7 +126,7 @@ module ActiveStore
 
       def create_with_block(id, ttl = default_ttl, &block)
         block = attributes_block_wrapper(&block)
-        connection.add(id, block.call({:id => id}), ttl)
+        connection.add(id, block.call({"id" => id}), ttl)
       end
 
       def find(id)

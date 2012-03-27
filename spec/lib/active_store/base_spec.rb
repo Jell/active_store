@@ -54,7 +54,7 @@ describe ActiveStore::Base do
   end
 
   it "lists attibute names" do
-    ItemStore.attributes.should include :a1, :a2
+    ItemStore.attributes.should include "a1", "a2"
   end
 
   it "provides accessors for its attributes" do
@@ -66,7 +66,7 @@ describe ActiveStore::Base do
 
   describe ".define_attributes" do
     it "should add id and created_at in attributes" do
-      ItemStore.attributes.should include :id, :created_at
+      ItemStore.attributes.should include "id", "created_at"
     end
     it "should add id and created_at in its instance accessors" do
       ItemStore.new.methods.map(&:to_sym).should include :id, :id=, :created_at, :created_at=
@@ -77,14 +77,14 @@ describe ActiveStore::Base do
     it "initializes given attributes" do
       params = { :a1 => "one", :a2 => "two" }
       item = ItemStore.new params
-      item.attributes[:a1].should == params[:a1]
-      item.attributes[:a2].should == params[:a2]
+      item.attributes["a1"].should == params[:a1]
+      item.attributes["a2"].should == params[:a2]
     end
     it "initializes attributes even when the params keys are strings" do
       params = { "a1" => "one", "a2" => "two" }
       item = ItemStore.new params
-      item.attributes[:a1].should == params["a1"]
-      item.attributes[:a2].should == params["a2"]
+      item.attributes["a1"].should == params["a1"]
+      item.attributes["a2"].should == params["a2"]
     end
     it "doesn't require attributes" do
       ItemStore.new.a1.should be_nil
@@ -97,7 +97,7 @@ describe ActiveStore::Base do
     end
     it "can set attribute to false" do
       item = ItemStore.new "a1" => false
-      item.attributes[:a1].should == false
+      item.attributes["a1"].should == false
     end
   end
 
