@@ -5,11 +5,11 @@ require "active_store/version"
 Gem::Specification.new do |s|
   s.name        = "active_store"
   s.version     = ActiveStore::VERSION
-  s.authors     = ["Petter Remen"]
-  s.email       = ["petter@icehouse.se"]
+  s.authors     = ["Petter Remen", "Jean-Louis Giordano"]
+  s.email       = ["petter@icehouse.se", "jean-louis@icehouse.se"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{A active record-like wrapper for memcached protocol}
+  s.description = %q{}
 
   s.rubyforge_project = "active_store"
 
