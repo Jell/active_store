@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_store (0.0.3)
+    active_store (0.0.4)
       dalli
 
 GEM
